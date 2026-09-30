@@ -1,0 +1,15 @@
+# 探针用：盖掉本机 ~/.dsh/settings.yaml 里的内网网关，走官方 chat/completions。
+# 本机 settings 的 catalog 只有 deepseek_v4，默认模型 deepseek-v4-flash 会 500。
+- id: llm-deepseek
+  name: '@deepseek-ai/dsh-llm-deepseek'
+  config:
+    thinking: enabled
+    reasoningEffort: high
+    baseURL: https://api.deepseek.com
+    models:
+      - id: deepseek-v4-flash
+        name: DeepSeek-V4-Flash
+- id: agent-default-model
+  config:
+    provider: deepseek-official
+    model: deepseek-v4-flash

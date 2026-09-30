@@ -1,0 +1,7 @@
+# High-risk diff keywords (per-project append). One pipe-separated group per line.
+# 纯单词关键词（sse/sql/auth/...）自动加词边界匹配：PASSED 不再误命中 sse；
+# 含非单词字符的模式（tauri::）保持子串匹配。
+auth|password|token|secret|schema|migration|contract
+stream|sse|eventsource|cookie|session|csrf|cors
+sql|injection|crypto|jwt|oauth|rbac|permission
+tauri::|PGlite|set_menu

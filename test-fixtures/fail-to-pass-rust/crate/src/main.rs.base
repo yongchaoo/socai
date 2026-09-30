@@ -1,0 +1,15 @@
+fn add(a: i64, b: i64) -> i64 {
+    a + b
+}
+
+fn main() {
+    println!("{}", add(1, 2));
+}
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn add_works() {
+        assert_eq!(super::add(1, 2), 3);
+    }
+}

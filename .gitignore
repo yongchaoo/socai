@@ -1,0 +1,21 @@
+# secrets — 明文 key，绝不入库（docs/ai.md 含 deepseek key）
+docs/ai.md
+
+# socai worktree 隔离区
+.socai/
+
+# 噪音
+.DS_Store
+*.err
+
+# 本地会话/状态（cursor session 存储 + socai 当前任务指针）
+.sessions/
+.lt-current
+
+# socai 执行日志（自进化语料；README/lessons 可入库）
+logs/runs/
+logs/current/
+logs/snapshots/
+
+# 依赖
+node_modules/
