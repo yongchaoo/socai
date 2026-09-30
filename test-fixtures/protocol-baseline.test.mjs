@@ -65,15 +65,24 @@ test('SKILL: acceptance.artifact 已落地（B05）——字段存在且收尾�
   assert.match(SKILL, /check-artifact\.sh/, 'SKILL 收尾须指向 check-artifact.sh');
 });
 
-test('SKILL: 执行日志 run-log.sh + SoCai/logs 锚点', () => {
+test('SKILL: 执行日志 run-log.sh + SOCAI_LOG_ROOT 锚点', () => {
   assert.match(SKILL, /run-log\.sh/, '缺 run-log.sh');
-  assert.match(SKILL, /www\/SoCai\/logs/, '缺 ~/www/SoCai/logs 落点');
+  assert.match(SKILL, /SOCAI_LOG_ROOT/, '缺 SOCAI_LOG_ROOT');
+  assert.match(SKILL, /local\/share\/socai\/logs/, '缺 ~/.local/share/socai/logs 默认落点');
   assert.match(SKILL, /snapshot-plans/, '缺 snapshot-plans');
   assert.match(SKILL, /测试命令/, '缺 test-gate 是命令不是 spec 的条文');
   assert.match(SKILL, /BUGMEM=/, '缺 BUGMEM= 赋值，禁止只写空 $BUGMEM');
-  assert.match(SKILL, /HOME\/\.claude\/skills\/socai\/_runtime\/bug-memory\.sh/, '缺全局 bug-memory 回退路径');
+  assert.match(SKILL, /SOCAI_HOME/, '缺 SOCAI_HOME');
+  assert.match(SKILL, /runtime\/bug-memory\.sh/, '缺 SOCAI_HOME/runtime bug-memory 回退');
   assert.match(SKILL, /RUNLOG=/, '缺 RUNLOG= 赋值');
   assert.match(SKILL, /\*\.prompt\.md/, 'snapshot 须含 prompt');
+});
+
+test('SKILL: 宿主 spawn 三选一（禁止猜）', () => {
+  assert.match(SKILL, /host=cursor/, '缺 host=cursor');
+  assert.match(SKILL, /host=trae/, '缺 host=trae');
+  assert.match(SKILL, /host=workbuddy/, '缺 host=workbuddy');
+  assert.match(SKILL, /禁止猜/, '缺「禁止猜」宿主协议');
 });
 
 test('specs/socai/orchestration.spec.md 存在且含 baseline/merge/auto GWT 锚点', () => {

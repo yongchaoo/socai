@@ -10,7 +10,8 @@
 Given 编排者跑 bug-memory.sh（recall / ingest / doctor）
 When 解析 life-kb 仓库目录
 Then 顺序为：MA_LIFE_DIR → ~/.config/socai/config.json 的 paths.life/life_dir →
-  SoCai 仓旁 ../life → $HOME/www/life → /Volumes/dufa-mac/www/life → cwd/../life
+  仓旁 ../life → cwd/../life
+And 不得把 $HOME/www/life 或 /Volumes/... 当默认候选（个人路径只允许经 env / config 显式指定）
 And 首个含 src/cli/search.ts 的目录胜出
 ```
 

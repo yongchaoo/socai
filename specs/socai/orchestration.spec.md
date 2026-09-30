@@ -84,12 +84,12 @@ When 收尾跑 check-artifact.sh
 Then exit 0（跳过），不阻塞收口
 ```
 
-## 执行日志（~/www/SoCai/logs）
+## 执行日志（$SOCAI_LOG_ROOT，默认 ~/.local/share/socai/logs）
 
 ```GWT
 Given /socai 开工且 run-log.sh 可用
 When 编排者钉死 slug / baseline / merge / executor / reviewer
-Then 必须 `run-log.sh start`，JSONL 落到 `$HOME/www/SoCai/logs/runs/<run_id>.jsonl`（可用 SOCAI_LOG_ROOT 覆盖）
+Then 必须 `run-log.sh start`，JSONL 落到 `$SOCAI_LOG_ROOT/runs/<run_id>.jsonl`（默认 `$SOCAI_HOME/logs`，SOCAI_HOME 默认 `$HOME/.local/share/socai`）
 And 计划落盘后 `snapshot-plans --from .socai/<slug>` 拷贝 goal/00-master/NN-*.spec.md
 And 每批 gate/review/fixer/infra 各 append 一条 event（含 batch、exit、模型）
 And 开工 recall 后 append 一条 recall event（status: ok|degraded|no-hit + hits 数）

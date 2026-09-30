@@ -825,7 +825,7 @@ test('cursor-host：SKILL 三选一含 Cursor 宿主 Task，禁止 host 路径�
   assert.match(skill, /三选一/, '步骤 0 应写 executor 模式三选一');
   assert.match(skill, /cursor-host/, '应出现 cursor-host 记法');
   assert.match(skill, /cursor-cli/, '应出现 cursor-cli 回落记法');
-  assert.match(skill, /composer-2\.5-fast/, 'cursor-host 默认 model');
+  assert.match(skill, /host=cursor/, 'cursor-host 须绑定 host=cursor');
   assert.match(skill, /显式.*model|model=<config model>/, 'cursor-host 须显式传 model');
   // host 路径明确禁止对本批再跑 socai-call exec
   assert.match(skill, /禁止.*socai-call exec|不.*走 `socai-call exec`/, 'cursor-host 禁止 socai-call exec');

@@ -5,7 +5,7 @@
 # Usage:
 #   run-log.sh start  [--slug S] [--target-repo P] [--goal T] [--mode auto|attended]
 #                     [--baseline X] [--merge X] [--executor X] [--reviewer X]
-#                     [--host cursor|claude-code|ci] [--model-orchestrator X]
+#                     [--host cursor|trae|workbuddy|claude-code|ci] [--model-orchestrator X]
 #       stdout 一行 run_id；同时写 $SOCAI_LOG_ROOT/current/<slug>
 #   run-log.sh event  [--run-id ID] --type TYPE [--batch N] [--json '{...}']
 #                     [--key value]...
@@ -13,10 +13,11 @@
 #       拷贝 goal/00-master/NN-*.spec.md 到 logs/snapshots/<run_id>/plans/
 #   run-log.sh finish [--run-id ID] [--status done|blocked|aborted] [--json '{...}']
 #
-# 默认根：SOCAI_LOG_ROOT 或 $HOME/www/SoCai/logs
+# 默认根：SOCAI_LOG_ROOT 或 $SOCAI_HOME/logs（SOCAI_HOME 默认 ~/.local/share/socai）
 set -euo pipefail
 
-ROOT="${SOCAI_LOG_ROOT:-$HOME/www/SoCai/logs}"
+SOCAI_HOME="${SOCAI_HOME:-$HOME/.local/share/socai}"
+ROOT="${SOCAI_LOG_ROOT:-$SOCAI_HOME/logs}"
 RUNS="$ROOT/runs"
 CURRENT="$ROOT/current"
 SNAPS="$ROOT/snapshots"

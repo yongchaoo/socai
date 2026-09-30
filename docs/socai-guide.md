@@ -53,7 +53,7 @@ v1 自治 CLI、v2 `/ma` role-play skill 已从仓库移除（见 ADR 0001）。
 
 **Executor 模式（三选一）**：
 - **原生**：未配 `roles.executor` → 宿主会话模型 spawn `socai-executor`。
-- **Cursor 宿主（cursor-host）**：`backend:"cursor"` **且** 编排者在 Cursor IDE 里 → Task spawn `socai-executor` + 显式 `model`（默认 `composer-2.5-fast`）。**不**跑 `socai-call exec` / `cursor-agent`（避开 CLI ~20–30s 冷启动）。
+- **Cursor 宿主（cursor-host）**：`backend:"cursor"` **且** 编排者在 Cursor IDE 里 → Task spawn `socai-executor` + 显式 `model`（来自 config，未配用会话默认）。**不**跑 `socai-call exec` / `cursor-agent`（避开 CLI ~20–30s 冷启动）。
 - **外部**：`claude-deepseek` / `codex` / `claude-glm`，或 `backend:"cursor"` 但不在 Cursor（Claude Code / CI）→ `socai-call exec .socai/<slug>/batch-N.prompt.md`（progress 记 `cursor-cli`）。gate / fixer / review / squash 不变。
 
 ## 怎么用
@@ -74,12 +74,12 @@ v1 自治 CLI、v2 `/ma` role-play skill 已从仓库移除（见 ADR 0001）。
   不配就全会话模型（review 变同模型 theater，但 gate 照常工作）。
 - **★ 跨模型铁律**：executor 与 reviewer 必须**异模型族**。executor=deepseek/cursor（含 cursor-host）→ reviewer 可 glm（原生 socai-reviewer）/kimi；executor=glm（原生）→ reviewer 必须 kimi/codex（via socai-call）。
 
-### 跑（Cursor IDE 或 Claude Code，目标项目目录）
+### 跑（Cursor / Trae / WorkBuddy，目标项目目录）
 ```
 /socai <你的目标>
 ```
 - 默认 **attended**：每批停问 y/n，你拍板。
-- 说「**放手跑 / auto 模式**」→ yes 闸门全跳，gate + fixer 自跑，**只高风险 diff 才 pause 等你**。CI / 后台用这个。
+- 说「**放手跑 / auto 模式**」→ yes 闸门全跳，gate + fixer 自跑；停点仅 BLOCKER / 产物验收失败 / fixer 满 3 / infra_fails≥2。
 
 ### 两个硬约束
 1. 在**新窗口 / 新 session** 里敲 `/socai`——agent 类型（socai-executor / socai-reviewer）只在 session 启动时加载（skill 是热加载，agent 类型不是）。
@@ -87,10 +87,12 @@ v1 自治 CLI、v2 `/ma` role-play skill 已从仓库移除（见 ADR 0001）。
 
 ### 跨项目用 — 跑 install.sh
 ```bash
-cd ~/www/SoCai && ./install.sh        # symlink socai-call + skill(socai/lt-*) + agent 全局；幂等
-./install.sh --verify                 # 校验：symlink 有效 / socai-call 在 PATH / SOCAI_DEEPSEEK_KEY/MA_DEEPSEEK_KEY 在 env
+./install.sh                          # 默认 --host=all：Cursor + Trae + WorkBuddy
+./install.sh --host=cursor            # 只要一个宿主
+./install.sh --verify                 # runtime + 已装宿主
 ```
-装完任何项目 `/socai` 都能用。SoCai 仍是 source of truth（symlink，改 SoCai 全局自动跟）。
+装完任何项目 `/socai` 都能用。本仓是 source of truth（软链；失败则 copy）。
+脚本落 `$SOCAI_HOME`（默认 `~/.local/share/socai`），不依赖 `~/.claude/skills` 当唯一全局。
 
 ## 各文件角色
 

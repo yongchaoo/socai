@@ -14,8 +14,8 @@
 #   1. MA_LIFE_DIR（显式设置但未含 src/cli/search.ts → 不 fall-through，
 #      直接按该路径报降级原因；静默换库会让「无 life」被本机另一份真库掩盖）
 #   2. ~/.config/socai/config.json 的 paths.life 或 life_dir
-#   3. 候选：脚本在 SoCai 仓时的 <repo>/../life、
-#      $HOME/www/life、/Volumes/dufa-mac/www/life、cwd/../life
+#   3. 候选：脚本所在仓旁 <repo>/../life、cwd/../life
+#      （不扫个人路径；要指定库用 MA_LIFE_DIR 或 config paths.life）
 #   BUG_MEMORY_LIMIT  检索 top-k（默认 5）
 #
 # 降级：life-kb 不存在 / CLI 起不来 / 无命中 → bug-memory.md 写显式「⚠️ 降级」
@@ -45,8 +45,6 @@ resolve_life_dir() {
   from_cfg="$(config_life_dir)"
   [[ -n "$from_cfg" ]] && candidates+=("$from_cfg")
   candidates+=("$ROOT/../life")
-  candidates+=("$HOME/www/life")
-  candidates+=("/Volumes/dufa-mac/www/life")
   candidates+=("$(pwd)/../life")
 
   local raw abs

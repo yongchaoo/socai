@@ -8,7 +8,7 @@
 
 - run jsonl：`$SOCAI_LOG_ROOT/runs/<run_id>.jsonl`（一行一事件：run_start / plan_snapshot / recall / batch_start / spawn / gate / review / fixer / infra / batch_finish / run_finish）
 - 可选：`$SOCAI_LOG_ROOT/snapshots/<run_id>/plans/`（goal / 00-master / 子 plan）
-- 现有教训：`ls ~/www/SoCai/logs/lessons/`（避免重复）
+- 现有教训：`ls $SOCAI_LOG_ROOT/lessons/`（默认 `~/.local/share/socai/logs/lessons/`，避免重复）
 
 ## 蒸什么（只蒸「下次能少走弯路」的）
 
@@ -20,7 +20,7 @@
 
 不蒸：任务领域知识（那是目标仓的事）、一次性偶然、无行动价值的吐槽。
 
-## 输出格式（每条一个 md 文件，落 `~/www/SoCai/logs/lessons/<主题kebab>.md`）
+## 输出格式（每条一个 md 文件，落 `$SOCAI_LOG_ROOT/lessons/<主题kebab>.md`）
 
 ```
 ---

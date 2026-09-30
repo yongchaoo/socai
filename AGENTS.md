@@ -1,6 +1,6 @@
-# SoCai — Agent Entry
+# socai — Agent Entry
 
-> **SoCai** 多 agent 编排。家 = 本 repo（`~/www/SoCai`）。
+> 多 agent 薄编排。家 = 本 repo。
 > 结构：`AGENTS.md`（本文件）+ `specs/`（行为契约）+ `docs/decisions/`（ADR）+ `plans/`（临时脚手架）。
 
 ## 现行：`/socai`
@@ -21,7 +21,7 @@
 ## 三层
 
 1. **执行** — 每批 spawn 隔离 context 的 executor，干完回摘要。
-2. **spine** — `plans/<slug>/` + 每批 commit；subagent 丢 context → spine 强制。
+2. **spine** — `.socai/<slug>/` + 每批 commit；subagent 丢 context → spine 强制。
 3. **机械 gate** — test / spec-sync / lint；fixer 封顶 3；高风险 escalation。
 
 ## 已删除（勿复活）
@@ -36,10 +36,13 @@
 
 - `specs/` — 行为契约（GWT），**SSOT**。
 - `docs/decisions/` — WHY / ADR。
-- `plans/<slug>/` — 单次任务临时脚手架，结束人工删。
+- `.socai/<slug>/` — 单次任务临时脚手架（相对 cwd，gitignore），结束人工删。
 
 ## 安装
 
 ```bash
-cd ~/www/SoCai && ./install.sh && ./install.sh --verify
+./install.sh && ./install.sh --verify
 ```
+
+默认装 Cursor + Trae + WorkBuddy。只要其中一个：`./install.sh --host=cursor`。
+装完开新会话，在目标项目敲 `/socai <目标>`。

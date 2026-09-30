@@ -67,7 +67,7 @@ v3 里计划常由编排者写 [`.socai/<slug>/00-master.md`](../.socai/)（giti
 | Agent 入口 | [`../AGENTS.md`](../AGENTS.md) |
 | 使用手册 | [`socai-guide.md`](socai-guide.md) |
 | ADR：subagent + 铁律 | [`decisions/0002-v3-subagent-prototype.md`](decisions/0002-v3-subagent-prototype.md) |
-| 安装脚本 | [`../install.sh`](../install.sh) |
+| 安装脚本 | [`../install.sh`](../install.sh)（`--host=cursor\|trae\|workbuddy\|all`） |
 
 ---
 
